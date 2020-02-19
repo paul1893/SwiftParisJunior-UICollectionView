@@ -100,10 +100,41 @@
                     <view key="view" contentMode="scaleToFill" id="H3V-RR-JId">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="w47-iU-DWi">
+                                <rect key="frame" x="0.0" y="140" width="414" height="722"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="saE-mU-2Sj">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="jjj-E9-gh1">
+                                        <rect key="frame" x="10" y="10" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="RVa-WX-w9m">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                        </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="R2i-y8-HZF" firstAttribute="bottom" secondItem="w47-iU-DWi" secondAttribute="bottom" id="F4u-pp-DLR"/>
+                            <constraint firstItem="w47-iU-DWi" firstAttribute="leading" secondItem="R2i-y8-HZF" secondAttribute="leading" id="NLQ-kb-T87"/>
+                            <constraint firstItem="R2i-y8-HZF" firstAttribute="trailing" secondItem="w47-iU-DWi" secondAttribute="trailing" id="fTS-vW-HfY"/>
+                            <constraint firstItem="w47-iU-DWi" firstAttribute="top" secondItem="R2i-y8-HZF" secondAttribute="top" id="vtk-5z-Yfx"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="R2i-y8-HZF"/>
                     </view>
                     <navigationItem key="navigationItem" id="tmL-v0-2QJ"/>
+                    <connections>
+                        <outlet property="collectionView" destination="w47-iU-DWi" id="OJz-He-N6k"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="daN-dy-iyk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
