@@ -15,6 +15,7 @@
 		2E53A41A23FD8F1900354707 /* ThirdViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E53A41923FD8F1900354707 /* ThirdViewController.swift */; };
 		2E53A41C23FD8F2400354707 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E53A41B23FD8F2400354707 /* SecondViewController.swift */; };
 		2E53A41E23FD8F2E00354707 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E53A41D23FD8F2E00354707 /* FirstViewController.swift */; };
+		2E53A42023FD9F0400354707 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E53A41F23FD9F0400354707 /* MovieCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		2E53A41923FD8F1900354707 /* ThirdViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThirdViewController.swift; sourceTree = "<group>"; };
 		2E53A41B23FD8F2400354707 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		2E53A41D23FD8F2E00354707 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
+		2E53A41F23FD9F0400354707 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 		2E53A41823FD8EF000354707 /* CompositionalLayout */ = {
 			isa = PBXGroup;
 			children = (
+				2E53A41F23FD9F0400354707 /* MovieCell.swift */,
 				2E53A41923FD8F1900354707 /* ThirdViewController.swift */,
 			);
 			path = CompositionalLayout;
@@ -170,6 +173,7 @@
 			files = (
 				2E53A41C23FD8F2400354707 /* SecondViewController.swift in Sources */,
 				2E53A40223FD8EAC00354707 /* AppDelegate.swift in Sources */,
+				2E53A42023FD9F0400354707 /* MovieCell.swift in Sources */,
 				2E53A41A23FD8F1900354707 /* ThirdViewController.swift in Sources */,
 				2E53A41E23FD8F2E00354707 /* FirstViewController.swift in Sources */,
 				2E53A40423FD8EAC00354707 /* SceneDelegate.swift in Sources */,
