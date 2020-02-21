@@ -1,17 +1,17 @@
 import UIKit
 
 class ThirdViewController: UIViewController {
-
+    
     enum Section : CaseIterable {
-        case bestMovieSection, best, allMoviesSection, allMovies
+        case titleBest, best, titleAll, all
     }
     struct Item : Hashable {
         let identifier = UUID()
         let movieName: String
     }
     
-    @IBOutlet weak var collectionView: UICollectionView!
-    private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
+    private let titleIdentifier = "title"
+    private let cellIdentifier = "cell"
     private let allMoviesItems:  [Item] = {
         var items = [Item]()
         for i in 0...13 {
@@ -26,33 +26,37 @@ class ThirdViewController: UIViewController {
         }
         return items
     }()
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Item>!
+    
+    @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
-            switch indexPath.section {
-            case 0, 2:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "titleCell", for: indexPath) as? TitleCell
+            switch Section.allCases[indexPath.section] {
+            case .titleAll, .titleBest:
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.titleIdentifier, for: indexPath) as? TitleCell
                 cell?.label.text = item.movieName
                 return cell
             default:
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? MovieCell
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: self.cellIdentifier, for: indexPath) as? MovieCell
                 cell?.imageView.image = UIImage(named: item.movieName)
                 return cell
             }
         })
         
         var snapshot = NSDiffableDataSourceSnapshot<Section, Item>()
-        snapshot.appendSections([.bestMovieSection, .best, .allMoviesSection, .allMovies])
-        snapshot.appendItems([Item(movieName: "Best movies")], toSection: .bestMovieSection)
+        snapshot.appendSections([.titleBest, .best, .titleAll, .all])
+        snapshot.appendItems([Item(movieName: "Best movies")], toSection: .titleBest)
         snapshot.appendItems(bestMovies, toSection: .best)
-        snapshot.appendItems([Item(movieName: "All movies")], toSection: .allMoviesSection)
-        snapshot.appendItems(allMoviesItems, toSection: .allMovies)
+        snapshot.appendItems([Item(movieName: "All movies")], toSection: .titleAll)
+        snapshot.appendItems(allMoviesItems, toSection: .all)
         dataSource.apply(snapshot, animatingDifferences: true)
         
         collectionView.collectionViewLayout = createLayout()
     }
-
+    
 }
 
 //1. UICollectionViewLayout
@@ -61,73 +65,70 @@ extension ThirdViewController {
         let layout = UICollectionViewCompositionalLayout {
             (sectionIndex: Int, layoutEnvironment: NSCollectionLayoutEnvironment)
             -> NSCollectionLayoutSection? in
-
-          let sectionLayoutKind = Section.allCases[sectionIndex]
-          switch (sectionLayoutKind) {
-          case .bestMovieSection: return self.generateSecondSectionLayout()
-          case .best: return self.generateFirstSectionLayout()
-          case .allMoviesSection: return self.generateSecondSectionLayout()
-          case .allMovies: return self.generateThirdSectionLayout()
-          }
+            
+            let sectionKind = Section.allCases[sectionIndex]
+            
+            switch sectionKind {
+            case .titleAll, .titleBest: return self.generateTitleLayout()
+            case .best: return self.generateBestLayout()
+            case .all: return self.generateAllLayout()
+            }
         }
         return layout
     }
     
-    func generateFirstSectionLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1/3),
-            heightDimension: .fractionalHeight(1)
+    func generateBestLayout() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1/3),
+                heightDimension: .fractionalHeight(1)
+            )
         )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1.0),
-            heightDimension: .fractionalHeight(0.3)
+        
+        let group = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalHeight(0.3)
+            ), subitems: [item]
         )
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-
+        
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         
         return section
     }
     
-    func generateSecondSectionLayout() -> NSCollectionLayoutSection {
-        let size = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1)
+    func generateTitleLayout() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1)
+            )
         )
-        let item = NSCollectionLayoutItem(layoutSize: size)
         
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(0.1)
-        )
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        let group = NSCollectionLayoutGroup.vertical(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(0.1)
+        ), subitems: [item])
         
-        
-        let section = NSCollectionLayoutSection(group: group)
-    
-        return section
+        return NSCollectionLayoutSection(group: group)
     }
     
-    func generateThirdSectionLayout() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1),
-            heightDimension: .fractionalHeight(1/2)
+    func generateAllLayout() -> NSCollectionLayoutSection {
+        let item = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1/2)
+            )
         )
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(
-        top: 5,
-        leading: 5,
-        bottom: 5,
-        trailing: 5)
+        item.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 5, bottom: 5, trailing: 5)
         
-        let groupSize = NSCollectionLayoutSize(
-            widthDimension: .fractionalWidth(1/3),
-            heightDimension: .fractionalHeight(0.6)
-        )
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
-        
+        let group = NSCollectionLayoutGroup.vertical(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1/3),
+                heightDimension: .fractionalHeight(0.5)
+            ), subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .paging

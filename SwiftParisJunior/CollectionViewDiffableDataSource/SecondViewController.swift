@@ -9,7 +9,12 @@ class SecondViewController: UIViewController {
         super.viewDidLoad()
         dataSource = UICollectionViewDiffableDataSource(collectionView: collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell? in
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-            cell.contentView.backgroundColor = .systemBlue
+            
+            if indexPath.section == 0 {
+                cell.contentView.backgroundColor = .systemBlue
+            } else {
+                cell.contentView.backgroundColor = .systemRed
+            }
             return cell
         })
         
