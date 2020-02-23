@@ -69,15 +69,15 @@ extension ThirdViewController {
             let sectionKind = Section.allCases[sectionIndex]
             
             switch sectionKind {
-            case .titleAll, .titleBest: return self.generateTitleLayout()
-            case .best: return self.generateBestLayout()
-            case .all: return self.generateAllLayout()
+            case .titleAll, .titleBest: return self.generateTitleSection()
+            case .best: return self.generateBestSection()
+            case .all: return self.generateAllSection()
             }
         }
         return layout
     }
     
-    func generateBestLayout() -> NSCollectionLayoutSection {
+    func generateBestSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1/3),
@@ -87,8 +87,8 @@ extension ThirdViewController {
         
         let group = NSCollectionLayoutGroup.horizontal(
             layoutSize: NSCollectionLayoutSize(
-                widthDimension: .fractionalWidth(1.0),
-                heightDimension: .fractionalHeight(0.3)
+                widthDimension: .fractionalWidth(1),
+                heightDimension: .fractionalHeight(1/3)
             ), subitems: [item]
         )
         
@@ -98,7 +98,7 @@ extension ThirdViewController {
         return section
     }
     
-    func generateTitleLayout() -> NSCollectionLayoutSection {
+    func generateTitleSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
@@ -109,13 +109,13 @@ extension ThirdViewController {
         let group = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
-                heightDimension: .fractionalHeight(0.1)
+                heightDimension: .estimated(64)
         ), subitems: [item])
         
         return NSCollectionLayoutSection(group: group)
     }
     
-    func generateAllLayout() -> NSCollectionLayoutSection {
+    func generateAllSection() -> NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1),
@@ -127,7 +127,7 @@ extension ThirdViewController {
         let group = NSCollectionLayoutGroup.vertical(
             layoutSize: NSCollectionLayoutSize(
                 widthDimension: .fractionalWidth(1/3),
-                heightDimension: .fractionalHeight(0.5)
+                heightDimension: .fractionalHeight(2/3)
             ), subitems: [item])
         
         let section = NSCollectionLayoutSection(group: group)
